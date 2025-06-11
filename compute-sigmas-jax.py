@@ -39,9 +39,12 @@ def get_noise_multiplier_jax(*, target_epsilon, target_delta, sample_rate, epoch
         eps_high = accountant.get_epsilon(target_delta)
         if DEBUG:
             print(f"[JAX Expansion] sigma_high: {sigma_high:.6f}, eps_high: {eps_high:.6f}")
-        sigma_high *= 2.0
+
         if eps_high <= target_epsilon:
             break
+
+        sigma_high *= 2.0
+
         if sigma_high > MAX_SIGMA:
             raise ValueError("The privacy budget is too low.")
 
